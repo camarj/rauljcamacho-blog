@@ -8,11 +8,13 @@ interface Props {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
   canonical?: string;
   type?: "website" | "article";
   publishedTime?: string;
   tags?: string[];
   author?: string;
+  noindex?: boolean;
   activeNav?: "home" | "topics" | "about" | "archive" | null;
 }
 
@@ -20,11 +22,13 @@ const {
   title,
   description,
   image,
+  imageAlt,
   canonical,
   type = "website",
   publishedTime,
   tags,
   author,
+  noindex = false,
   activeNav = "home",
 } = Astro.props;
 ---
@@ -34,7 +38,11 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#f5f1ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d1428" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -54,11 +62,13 @@ const {
       title={title}
       description={description}
       image={image}
+      imageAlt={imageAlt}
       canonical={canonical}
       type={type}
       publishedTime={publishedTime}
       tags={tags}
       author={author}
+      noindex={noindex}
     />
 
     <script is:inline>

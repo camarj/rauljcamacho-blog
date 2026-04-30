@@ -10,7 +10,7 @@ export async function GET(context) {
   return rss({
     title: "rauljcamacho.online",
     description:
-      "Cuaderno de campo sobre IA, tecnología y el oficio de construir software.",
+      "Cuaderno de campo sobre IA, tecnología y cómo construimos software.",
     site: context.site,
     items: sorted.map((post) => ({
       title: post.data.title,

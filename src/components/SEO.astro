@@ -3,30 +3,40 @@ interface Props {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
   canonical?: string;
   type?: "website" | "article";
   publishedTime?: string;
   tags?: string[];
   author?: string;
+  noindex?: boolean;
 }
 
 const {
   title,
   description,
   image,
+  imageAlt = "rauljcamacho.online · Cuaderno de campo sobre IA y software",
   canonical,
   type = "website",
   publishedTime,
   tags = [],
   author = "Raul J. Camacho",
+  noindex = false,
 } = Astro.props;
 
 const siteName = "rauljcamacho.online";
-const fullTitle = title.includes(siteName) ? title : `${title} — ${siteName}`;
+const fullTitle = title.includes(siteName) ? title : `${title} · ${siteName}`;
 const canonicalURL = new URL(canonical ?? Astro.url.pathname, Astro.site).toString();
+
+const FALLBACK_OG = "https://cdn.rauljcamacho.online/covers/Mi_foto.jpeg";
 const ogImage = image
-  ? new URL(image, Astro.site).toString()
-  : new URL("/og-default.jpg", Astro.site).toString();
+  ? image.startsWith("http")
+    ? image
+    : new URL(image, Astro.site).toString()
+  : FALLBACK_OG;
+
+const twitterHandle = "@rauljcamacho";
 
 const articleSchema = type === "article" && publishedTime
   ? {
@@ -36,7 +46,16 @@ const articleSchema = type === "article" && publishedTime
       description,
       image: ogImage,
       datePublished: publishedTime,
-      author: { "@type": "Person", name: author },
+      author: {
+        "@type": "Person",
+        name: author,
+        url: Astro.site?.toString(),
+        sameAs: [
+          "https://x.com/rauljcamacho",
+          "https://github.com/camarj",
+          "https://www.linkedin.com/in/rauljcamacho/",
+        ],
+      },
       publisher: {
         "@type": "Person",
         name: author,
@@ -44,6 +63,7 @@ const articleSchema = type === "article" && publishedTime
       },
       mainEntityOfPage: { "@type": "WebPage", "@id": canonicalURL },
       keywords: tags.join(", "),
+      inLanguage: "es",
     }
   : null;
 
@@ -54,7 +74,17 @@ const websiteSchema = type === "website"
       url: Astro.site?.toString(),
       name: siteName,
       description,
-      author: { "@type": "Person", name: author },
+      inLanguage: "es",
+      author: {
+        "@type": "Person",
+        name: author,
+        url: Astro.site?.toString(),
+        sameAs: [
+          "https://x.com/rauljcamacho",
+          "https://github.com/camarj",
+          "https://www.linkedin.com/in/rauljcamacho/",
+        ],
+      },
     }
   : null;
 ---
@@ -64,18 +94,31 @@ const websiteSchema = type === "website"
 <meta name="author" content={author} />
 <link rel="canonical" href={canonicalURL} />
 
+{noindex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <meta
+    name="robots"
+    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+  />
+)}
+
 <meta property="og:type" content={type} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={imageAlt} />
 <meta property="og:site_name" content={siteName} />
 <meta property="og:locale" content="es_ES" />
 
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={twitterHandle} />
+<meta name="twitter:creator" content={twitterHandle} />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
 
 {publishedTime && <meta property="article:published_time" content={publishedTime} />}
 {type === "article" && <meta property="article:author" content={author} />}

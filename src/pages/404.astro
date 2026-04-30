@@ -1,0 +1,34 @@
+---
+import Base from "../layouts/Base.astro";
+import Reveal from "../components/Reveal.astro";
+---
+
+<Base
+  title="Página no encontrada"
+  description="La página que buscas no existe o fue movida."
+  noindex={true}
+  activeNav={null}
+>
+  <main class="about-wrap">
+    <Reveal>
+      <span class="eyebrow">404</span>
+    </Reveal>
+    <Reveal delay={60}>
+      <h1>Esta página no existe.</h1>
+    </Reveal>
+    <Reveal delay={120}>
+      <div class="about-body">
+        <p>O quizás existió y la moví. Pasa.</p>
+        <p>
+          <a href="/" style="border-bottom: 1px solid currentColor"
+            >Volver al inicio</a
+          >
+          ·
+          <a href="/archive" style="border-bottom: 1px solid currentColor"
+            >Ver el archivo</a
+          >
+        </p>
+      </div>
+    </Reveal>
+  </main>
+</Base>

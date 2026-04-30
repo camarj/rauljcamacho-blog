@@ -27,6 +27,7 @@ const { Content, headings } = await render(post);
   title={post.data.title}
   description={post.data.excerpt}
   image={post.data.image}
+  imageAlt={post.data.imageAlt || post.data.title}
   type="article"
   publishedTime={isoDate(post.data.date)}
   tags={post.data.tags}
