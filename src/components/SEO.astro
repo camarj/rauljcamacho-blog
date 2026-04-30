@@ -29,7 +29,7 @@ const siteName = "rauljcamacho.online";
 const fullTitle = title.includes(siteName) ? title : `${title} · ${siteName}`;
 const canonicalURL = new URL(canonical ?? Astro.url.pathname, Astro.site).toString();
 
-const FALLBACK_OG = "https://cdn.rauljcamacho.online/covers/Mi_foto.jpeg";
+const FALLBACK_OG = new URL("/og.png", Astro.site).toString();
 const ogImage = image
   ? image.startsWith("http")
     ? image

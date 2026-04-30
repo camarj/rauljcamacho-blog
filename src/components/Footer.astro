@@ -14,15 +14,15 @@ const cols = [
     links: [
       { label: "Sobre mí", href: "/about" },
       { label: "Newsletter", href: "/#newsletter" },
-      { label: "Contacto", href: "mailto:hola@rauljcamacho.online" },
+      { label: "Contacto", href: "mailto:rauljcamacho.rrss@gmail.com" },
     ],
   },
   {
     title: "Social",
     links: [
-      { label: "Twitter / X", href: "#" },
-      { label: "GitHub", href: "#" },
-      { label: "LinkedIn", href: "#" },
+      { label: "Twitter / X", href: "https://x.com/rauljcamacho", external: true },
+      { label: "GitHub", href: "https://github.com/camarj", external: true },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/rauljcamacho/", external: true },
     ],
   },
 ];
@@ -78,7 +78,14 @@ const year = new Date().getFullYear();
           <ul>
             {c.links.map((l) => (
               <li>
-                <a href={l.href}>{l.label}</a>
+                <a
+                  href={l.href}
+                  {...(l.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  {l.label}
+                </a>
               </li>
             ))}
           </ul>
