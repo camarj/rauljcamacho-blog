@@ -1,0 +1,75 @@
+---
+import Base from "../layouts/Base.astro";
+import Reveal from "../components/Reveal.astro";
+import Halftone from "../components/Halftone.astro";
+---
+
+<Base
+  title="Sobre mí"
+  description="Soy Raul J. Camacho. Llevo más de una década construyendo software, los últimos años casi todo el tiempo cerca de modelos de lenguaje, agentes y la pequeña revolución silenciosa que están provocando."
+  activeNav="about"
+>
+  <main class="about-wrap">
+    <Reveal>
+      <span class="eyebrow">Sobre mí</span>
+    </Reveal>
+    <Reveal delay={60}>
+      <h1>Construyo cosas que piensan, escribo sobre cosas que cambian.</h1>
+    </Reveal>
+
+    <Reveal delay={120}>
+      <Halftone
+        src="https://cdn.rauljcamacho.online/covers/Mi_foto.jpeg"
+        alt="Foto de Raul"
+        class="about-photo"
+      />
+    </Reveal>
+
+    <Reveal delay={180}>
+      <div class="about-body">
+        <p>
+          Soy <strong>Raul J. Camacho</strong>. Llevo más de una década
+          construyendo software, los últimos años casi todo el tiempo cerca de
+          modelos de lenguaje, agentes y la pequeña revolución silenciosa que
+          están provocando en cómo construimos software.
+        </p>
+        <p>
+          Este blog es, sobre todo, un cuaderno: un sitio donde dejo notas
+          mientras construyo, postales desde proyectos que aún no terminan, y
+          la ocasional opinión incómoda. Si algo de lo que lees te parece
+          útil, escríbeme. Si te parece equivocado, escríbeme también. La
+          conversación es lo único que consistentemente me ayuda a pensar mejor.
+        </p>
+        <p>
+          Y vale la pena. Estamos viviendo el momento más rápido de la
+          industria en décadas. Cada semana sale algo que cambia cómo trabajo.
+          Los que estamos adentro lo estamos disfrutando como pocas veces.
+          Otros tienen el cambio pasando frente a sus ojos y ni lo notan. Esa
+          brecha se va a cobrar.
+        </p>
+        <p>
+          Puedes encontrarme en <a
+            href="https://x.com/rauljcamacho"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="border-bottom: 1px solid currentColor">Twitter</a
+          >, <a
+            href="https://github.com/camarj"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="border-bottom: 1px solid currentColor">GitHub</a
+          > y <a
+            href="https://www.linkedin.com/in/rauljcamacho/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="border-bottom: 1px solid currentColor">LinkedIn</a
+          >, o por correo en <a
+            href="mailto:rauljcamacho.rrss@gmail.com"
+            style="border-bottom: 1px solid currentColor"
+            >rauljcamacho.rrss@gmail.com</a
+          >.
+        </p>
+      </div>
+    </Reveal>
+  </main>
+</Base>

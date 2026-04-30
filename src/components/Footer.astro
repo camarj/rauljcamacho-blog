@@ -1,0 +1,151 @@
+---
+const cols = [
+  {
+    title: "Contenido",
+    links: [
+      { label: "Artículos", href: "/" },
+      { label: "Temas", href: "/topics" },
+      { label: "Archivo", href: "/archive" },
+      { label: "RSS", href: "/rss.xml" },
+    ],
+  },
+  {
+    title: "Sobre",
+    links: [
+      { label: "Sobre mí", href: "/about" },
+      { label: "Newsletter", href: "/#newsletter" },
+      { label: "Contacto", href: "mailto:hola@rauljcamacho.online" },
+    ],
+  },
+  {
+    title: "Social",
+    links: [
+      { label: "Twitter / X", href: "#" },
+      { label: "GitHub", href: "#" },
+      { label: "LinkedIn", href: "#" },
+    ],
+  },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer shell" id="newsletter">
+  <div class="newsletter">
+    <div>
+      <h3>Suscríbete al newsletter</h3>
+      <p>
+        Una carta corta cada quince días sobre IA, desarrollo y cómo cambia la
+        forma de trabajar. Sin spam.
+      </p>
+    </div>
+    <div>
+      <form
+        data-newsletter-form
+        action="https://buttondown.com/api/emails/embed-subscribe/raul_j"
+        method="post"
+        target="_blank"
+        novalidate
+      >
+        <input
+          type="email"
+          name="email"
+          placeholder="tu@correo.com"
+          aria-label="Correo electrónico"
+          data-newsletter-input
+        />
+        <button type="submit" class="btn btn-primary">Suscribirme</button>
+      </form>
+      <div class="form-msg" data-newsletter-msg style="display: none;"></div>
+    </div>
+  </div>
+
+  <div class="footer-cols">
+    <div class="footer-col footer-brand">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        rauljcamacho.online
+      </div>
+      <p>
+        Notas sobre inteligencia artificial, tecnología y la forma en que
+        cambia el oficio de construir software.
+      </p>
+    </div>
+    {
+      cols.map((c) => (
+        <div class="footer-col">
+          <h5>{c.title}</h5>
+          <ul>
+            {c.links.map((l) => (
+              <li>
+                <a href={l.href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="footer-bottom">
+    <span>© {year} Raul J. Camacho. Todos los derechos reservados.</span>
+    <span>Hecho con curiosidad y café.</span>
+  </div>
+</footer>
+
+<script is:inline>
+  (function () {
+    const form = document.querySelector("[data-newsletter-form]");
+    const input = document.querySelector("[data-newsletter-input]");
+    const msg = document.querySelector("[data-newsletter-msg]");
+    if (!form || !input || !msg) return;
+
+    const setMsg = (text, kind) => {
+      msg.textContent = text;
+      msg.className = "form-msg" + (kind === "ok" ? " ok" : "");
+      msg.style.display = text ? "block" : "none";
+    };
+
+    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+
+    input.addEventListener("input", () => {
+      input.classList.remove("error");
+      setMsg("", "");
+    });
+
+    form.addEventListener("submit", (e) => {
+      const value = input.value.trim();
+      if (!value) {
+        e.preventDefault();
+        input.classList.add("error");
+        setMsg("Escribe un correo", "err");
+        return;
+      }
+      if (!isEmail(value)) {
+        e.preventDefault();
+        input.classList.add("error");
+        setMsg("Ese correo no es válido", "err");
+        return;
+      }
+
+      e.preventDefault();
+      input.classList.remove("error");
+
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        mode: "no-cors",
+      })
+        .then(() => {
+          setMsg("¡Gracias! Revisa tu bandeja para confirmar.", "ok");
+          input.value = "";
+        })
+        .catch(() => {
+          setMsg(
+            "Algo falló al suscribirte. Intenta de nuevo en un momento.",
+            "err"
+          );
+        });
+    });
+  })();
+</script>

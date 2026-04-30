@@ -1,0 +1,70 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Reveal from "../components/Reveal.astro";
+import Halftone from "../components/Halftone.astro";
+import { formatDateLong } from "../lib/dates";
+
+const allPosts = await getCollection("posts", ({ data }) => !data.draft);
+const posts = allPosts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+---
+
+<Base
+  title="Cuaderno de campo sobre IA, tecnología y el oficio de construir"
+  description="Ensayos, postales y notas crudas sobre cómo está cambiando la forma en que trabajamos con máquinas que ya casi piensan. Por Raul J. Camacho."
+  activeNav="home"
+>
+  <main>
+    <section class="home-hero shell">
+      <Reveal>
+        <div class="eyebrow">rauljcamacho.online · Notas</div>
+      </Reveal>
+      <Reveal delay={80}>
+        <h1>Cuaderno de campo sobre IA, tecnología y el oficio de construir.</h1>
+      </Reveal>
+      <Reveal delay={160}>
+        <p class="lede">
+          Escribo desde el lado donde se ensucia el código. Ensayos, postales y
+          notas crudas sobre cómo está cambiando la forma en que trabajamos con
+          máquinas que ya casi piensan.
+        </p>
+      </Reveal>
+    </section>
+
+    <section class="post-list shell">
+      {
+        posts.map((p, i) => (
+          <Reveal delay={i * 60} class="post-row">
+            <div>
+              <div class="date">{formatDateLong(p.data.date)}</div>
+              <div class="meta-tags">
+                {p.data.tags.map((t) => (
+                  <span class="pill">{t}</span>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <a href={`/posts/${p.id}`} class="post-title">
+                {p.data.title}
+              </a>
+              <p class="post-excerpt">{p.data.excerpt}</p>
+              <a href={`/posts/${p.id}`} class="read-more">
+                Leer artículo →
+              </a>
+            </div>
+
+            <Halftone
+              src={p.data.image}
+              alt={p.data.imageAlt || p.data.title}
+              class="thumb"
+              href={`/posts/${p.id}`}
+            />
+          </Reveal>
+        ))
+      }
+    </section>
+  </main>
+</Base>

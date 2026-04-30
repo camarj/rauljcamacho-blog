@@ -1,0 +1,59 @@
+---
+interface Props {
+  title: string;
+  url?: string;
+}
+
+const { title, url } = Astro.props;
+const fullUrl = url ?? Astro.url.href;
+const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(fullUrl)}`;
+const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullUrl)}`;
+---
+
+<div class="share-bar shell">
+  <span class="label">Compartir este artículo</span>
+  <div class="share-buttons">
+    <a
+      href={twitterUrl}
+      class="share-btn"
+      aria-label="Compartir en Twitter"
+      target="_blank"
+      rel="noopener noreferrer">𝕏</a
+    >
+    <a
+      href={linkedinUrl}
+      class="share-btn"
+      aria-label="Compartir en LinkedIn"
+      target="_blank"
+      rel="noopener noreferrer">in</a
+    >
+    <button
+      class="share-btn"
+      aria-label="Copiar enlace"
+      title="Copiar enlace"
+      data-copy-link
+      data-url={fullUrl}>⌘</button
+    >
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const btn = document.querySelector("[data-copy-link]");
+    if (!btn) return;
+    btn.addEventListener("click", async () => {
+      const url = btn.getAttribute("data-url") || window.location.href;
+      try {
+        if (navigator.clipboard) await navigator.clipboard.writeText(url);
+      } catch (e) {}
+      btn.classList.add("copied");
+      btn.textContent = "✓";
+      btn.setAttribute("title", "Copiado");
+      setTimeout(() => {
+        btn.classList.remove("copied");
+        btn.textContent = "⌘";
+        btn.setAttribute("title", "Copiar enlace");
+      }, 1800);
+    });
+  })();
+</script>

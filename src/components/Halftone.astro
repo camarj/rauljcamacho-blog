@@ -1,0 +1,37 @@
+---
+interface Props {
+  src: string;
+  alt?: string;
+  class?: string;
+  href?: string;
+  loading?: "lazy" | "eager";
+  width?: number;
+  height?: number;
+}
+
+const {
+  src,
+  alt = "",
+  class: className = "",
+  href,
+  loading = "lazy",
+  width,
+  height,
+} = Astro.props;
+
+const Wrap = href ? "a" : "div";
+const wrapProps = href ? { href } : {};
+---
+
+<Wrap class:list={["halftone-wrap", className]} {...wrapProps}>
+  <img
+    class="halftone-img"
+    src={src}
+    alt={alt}
+    loading={loading}
+    width={width}
+    height={height}
+    decoding="async"
+  />
+  <div class="halftone-overlay" aria-hidden="true"></div>
+</Wrap>

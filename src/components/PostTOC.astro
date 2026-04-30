@@ -1,0 +1,64 @@
+---
+interface Heading {
+  id: string;
+  text: string;
+  depth: number;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const items = headings.filter((h) => h.depth === 2);
+---
+
+{
+  items.length > 0 && (
+    <aside class="toc">
+      <div class="toc-title">Contenido</div>
+      <ol>
+        {items.map((h) => (
+          <li data-toc-item data-target={h.id}>
+            <span>{h.text}</span>
+            <span class="num"></span>
+          </li>
+        ))}
+      </ol>
+    </aside>
+  )
+}
+
+<script is:inline>
+  (function () {
+    const items = Array.from(document.querySelectorAll("[data-toc-item]"));
+    if (!items.length) return;
+
+    items.forEach((li) => {
+      li.addEventListener("click", () => {
+        const id = li.getAttribute("data-target");
+        if (!id) return;
+        const target = document.getElementById(id);
+        if (!target) return;
+        const top = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: "smooth" });
+      });
+    });
+
+    const ids = items.map((li) => li.getAttribute("data-target")).filter(Boolean);
+    const setActive = () => {
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top - 120 <= 0) current = id;
+      }
+      items.forEach((li) =>
+        li.classList.toggle("active", li.getAttribute("data-target") === current)
+      );
+    };
+    window.addEventListener("scroll", setActive, { passive: true });
+    setActive();
+  })();
+</script>

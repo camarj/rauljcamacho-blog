@@ -1,0 +1,114 @@
+---
+interface Props {
+  activeNav?: "home" | "topics" | "about" | "archive" | null;
+}
+
+const { activeNav = "home" } = Astro.props;
+
+const links = [
+  { href: "/", id: "home", label: "Artículos" },
+  { href: "/topics", id: "topics", label: "Temas" },
+  { href: "/about", id: "about", label: "Sobre mí" },
+  { href: "/archive", id: "archive", label: "Archivo" },
+];
+---
+
+<div class="topstrip"></div>
+<header class="header shell">
+  <a class="brand" href="/">
+    <span class="brand-dot"></span>
+    rauljcamacho.online
+  </a>
+  <nav class="nav">
+    {
+      links.map((l) => (
+        <a href={l.href} class={activeNav === l.id ? "active" : ""}>
+          {l.label}
+        </a>
+      ))
+    }
+  </nav>
+  <div class="header-actions">
+    <button
+      class="theme-toggle"
+      aria-label="Cambiar tema"
+      title="Cambiar tema"
+      data-theme-toggle
+    >
+      <svg
+        class="icon-sun"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path
+          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+        ></path>
+      </svg>
+      <svg
+        class="icon-moon"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+      </svg>
+    </button>
+    <a class="btn" href="/#newsletter">Suscribirse</a>
+    <button class="hamburger" aria-label="Menú" data-mobile-toggle>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" data-mobile-menu>
+  {
+    links.map((l) => (
+      <a href={l.href}>{l.label}</a>
+    ))
+  }
+</div>
+
+<style is:inline>
+  /* By default show moon (light theme); JS shows sun in dark theme */
+  .theme-toggle .icon-sun { display: none; }
+  [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+</style>
+
+<script is:inline>
+  // Theme toggle
+  (function () {
+    const btn = document.querySelector("[data-theme-toggle]");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  })();
+
+  // Mobile menu drawer
+  (function () {
+    const toggle = document.querySelector("[data-mobile-toggle]");
+    const menu = document.querySelector("[data-mobile-menu]");
+    if (!toggle || !menu) return;
+    const close = () => {
+      toggle.classList.remove("open");
+      menu.classList.remove("open");
+    };
+    toggle.addEventListener("click", () => {
+      const open = toggle.classList.toggle("open");
+      menu.classList.toggle("open", open);
+    });
+    menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", close));
+  })();
+</script>
