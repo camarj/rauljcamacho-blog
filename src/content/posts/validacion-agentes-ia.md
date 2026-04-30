@@ -9,7 +9,7 @@ author: "Raul J. Camacho"
 draft: false
 ---
 
-El fin de semana leí un artículo de Boris Tane que resonó con mucha gente en la comunidad de desarrollo. La tesis: el ciclo de vida del desarrollo de software (SDLC); ese flujo de Requerimientos → Diseño → Implementación → Testing → Code Review → Despliegue → Monitoreo que todos conocemos — está muerto.
+El fin de semana leí un artículo de Boris Tane que resonó con mucha gente en la comunidad de desarrollo. La tesis: el ciclo de vida del desarrollo de software (SDLC); ese flujo de Requerimientos → Diseño → Implementación → Testing → Code Review → Despliegue → Monitoreo que todos conocemos. Está muerto.
 
 En su lugar, argumenta Tane, tenemos un loop colapsado: Intención → Construir → Observar → Repetir. Un developer le dice a un agente de IA qué quiere, el agente genera el código, el developer observa si funciona, y repite. Las fases intermedias se comprimieron o desaparecieron.
 
@@ -31,13 +31,11 @@ Más herramientas de IA, más problemas.
 
 Veracode reportó que el 45% del código generado por IA contiene fallas de seguridad. En Java la cifra supera el 70%. Checkmarx confirmó números similares con múltiples asistentes de código.
 
-METR condujo un estudio controlado con developers open-source experimentados y encontró un 19% de ralentización neta cuando usaban herramientas de IA. No un 19% de aceleración — un 19% de ralentización. ¿La razón? "Impuestos ocultos": carga cognitiva por alternar entre codificar y prompting, esfuerzo de verificar código que parece correcto pero no lo es, y defectos sutiles introducidos que cuestan más tiempo del que ahorraron.
+METR condujo un estudio controlado con developers open-source experimentados y encontró un 19% de ralentización neta cuando usaban herramientas de IA. No un 19% de aceleración. Un 19% de ralentización. ¿La razón? "Impuestos ocultos": carga cognitiva por alternar entre codificar y prompting, esfuerzo de verificar código que parece correcto pero no lo es, y defectos sutiles introducidos que cuestan más tiempo del que ahorraron.
 
 Anthropic, en su reporte de tendencias 2026, estimó que los developers solo pueden delegar completamente entre 0% y 20% de sus tareas a agentes. El resto requiere supervisión humana activa.
 
 Esto no es un argumento contra la IA en el desarrollo. Es evidencia de que la velocidad sin capas de confianza no es velocidad; es deuda técnica acelerada.
-
-![Un diagrama circular simple que muestre el flujo: Intención → Construir → Observar → Repetir.](https://intelisidecms.inteliside.com/uploads/5_1_Loop_Colapsado_df9492d827.jpeg)
 
 ## Cuatro problemas que nadie está resolviendo como sistema
 
@@ -45,7 +43,7 @@ Cuando analizas qué se perdió al colapsar el ciclo, emergen cuatro problemas c
 
 **1. Verificación semántica.**
 
-El agente genera lo que entendió, no necesariamente lo que el developer quiso. Hay un gap entre la intención original y el código producido. Los LLMs optimizan probabilidad local, no semántica global — lo dice un paper de CMU de 2025. El código resultante es plausible pero no siempre correcto.
+El agente genera lo que entendió, no necesariamente lo que el developer quiso. Hay un gap entre la intención original y el código producido. Los LLMs optimizan probabilidad local, no semántica global. Lo dice un paper de CMU de 2025. El código resultante es plausible pero no siempre correcto.
 
 **2. Seguridad continua.**
 
@@ -69,15 +67,13 @@ Pero hay dos gaps fundamentales.
 
 - **Segundo:** las soluciones de observabilidad que existen (Braintrust valuada en $800M, por ejemplo) están enfocadas en observar sistemas de IA; cómo se comportan los LLMs, qué tan buenos son los outputs. Nadie está haciendo observabilidad de negocio para el código generado por agentes. La pregunta no es "¿El LLM generó buen código?" sino "¿El código que generó cumple las reglas del negocio?"
 
-![Una pirámide o escudo compuesto por 4 capas horizontales: Verificación Semántica, Seguridad Continua, Correctitud de Negocio, Coherencia Arquitectónica.](https://intelisidecms.inteliside.com/uploads/5_2_Hipotesis_Capas_de_Confianza_93078a7695.jpeg)
-
 ## La hipótesis
 
 Mi hipótesis es que es posible construir capas de confianza automatizadas que operen dentro del loop colapsado; sin frenar la velocidad, pero haciendo que esa velocidad sea sostenible. No se trata de volver al ciclo clásico. Se trata de reemplazar lo que se perdió con algo que funcione a la velocidad actual.
 
 Esto implica que la spec intermedia; el documento que describe qué debe hacer una feature antes de que el agente la implemente, se convierte en el punto de integración. De esa spec se pueden derivar automáticamente: criterios de verificación semántica, restricciones de seguridad específicas del proyecto, assertions de negocio, e invariantes arquitectónicas. Un solo artefacto alimentando cuatro capas de validación.
 
-¿Es viable? Honestamente, no lo sé todavía. Pero los componentes individuales ya existen — SDD para specs, SAST + LLMs para seguridad, patrones de orquestación multi-agente para coherencia. Lo que falta es la integración.
+¿Es viable? Honestamente, no lo sé todavía. Pero los componentes individuales ya existen: SDD para specs, SAST + LLMs para seguridad, patrones de orquestación multi-agente para coherencia. Lo que falta es la integración.
 
 Y eso, creo, es donde está la oportunidad real.
 
