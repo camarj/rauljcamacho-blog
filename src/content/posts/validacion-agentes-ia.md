@@ -82,8 +82,3 @@ Si estás trabajando con agentes de IA para desarrollo y has visto estos problem
 En Inteliside, creemos que la tecnología debe ser invisible, pero la confianza debe ser estructural. Si sientes que tu equipo está "corriendo más rápido" pero entregando resultados con más fricción, queremos escucharte.
 
 ¿Qué proceso operativo está frenando tu capacidad de escalar hoy? Cuéntanos tu caso en nuestro [formulario de diagnóstico](https://www.inteliside.com/formulario). No buscamos venderte una herramienta, buscamos entender tu industria para diseñar la capa de confianza que tu negocio necesita.
-
----
-
-Raúl Camacho
-CEO Inteliside S.A.S
