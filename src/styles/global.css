@@ -32,6 +32,10 @@
   --accent: #f1ece1;
 }
 
+:root { --gutter: 32px; }
+@media (max-width: 720px) { :root { --gutter: 24px; } }
+@media (max-width: 420px) { :root { --gutter: 20px; } }
+
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
@@ -58,10 +62,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .shell {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 32px;
-}
-@media (max-width: 720px) {
-  .shell { padding: 0 20px; }
+  padding: 0 var(--gutter);
 }
 
 /* === Header ============================================================== */
@@ -172,7 +173,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   inset: 0;
   background: var(--bg);
   z-index: 100;
-  padding: 80px 32px 32px;
+  padding: 80px var(--gutter) 32px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -190,7 +191,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .mobile-menu .close {
   position: absolute;
-  top: 24px; right: 32px;
+  top: 24px; right: var(--gutter);
   width: 36px; height: 36px;
 }
 
@@ -301,7 +302,7 @@ h3 { font-size: clamp(20px, 2vw, 26px); line-height: 1.25; font-weight: 600; }
 
 /* === Home ================================================================ */
 .home-hero {
-  padding: 64px 0 48px;
+  padding-block: 64px 48px;
   border-bottom: 1px solid var(--line);
 }
 .home-hero h1 {
@@ -314,7 +315,7 @@ h3 { font-size: clamp(20px, 2vw, 26px); line-height: 1.25; font-weight: 600; }
 }
 
 .post-list {
-  padding: 32px 0 96px;
+  padding-block: 32px 96px;
 }
 .post-row {
   display: grid;
@@ -394,7 +395,7 @@ h3 { font-size: clamp(20px, 2vw, 26px); line-height: 1.25; font-weight: 600; }
 
 /* === Post page =========================================================== */
 .post-header {
-  padding: 48px 0 32px;
+  padding-block: 48px 32px;
   max-width: 880px;
   margin: 0 auto;
 }
@@ -436,6 +437,7 @@ h3 { font-size: clamp(20px, 2vw, 26px); line-height: 1.25; font-weight: 600; }
 .post-intro {
   max-width: 880px;
   margin: 24px auto 0;
+  padding: 0 var(--gutter);
   font-family: var(--serif);
   font-size: 19px;
   line-height: 1.65;
@@ -450,13 +452,12 @@ h3 { font-size: clamp(20px, 2vw, 26px); line-height: 1.25; font-weight: 600; }
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 64px;
-  padding: 0 32px;
+  padding: 0 var(--gutter);
 }
 @media (max-width: 960px) {
   .post-body-wrap {
     grid-template-columns: 1fr;
     gap: 32px;
-    padding: 0 20px;
   }
 }
 .toc {
@@ -597,7 +598,7 @@ h3 { font-size: clamp(20px, 2vw, 26px); line-height: 1.25; font-weight: 600; }
 .about-wrap {
   max-width: 880px;
   margin: 0 auto;
-  padding: 64px 32px 96px;
+  padding: 64px var(--gutter) 96px;
 }
 .about-wrap h1 { margin-bottom: 32px; }
 .about-photo {
@@ -621,7 +622,7 @@ h3 { font-size: clamp(20px, 2vw, 26px); line-height: 1.25; font-weight: 600; }
 .footer {
   background: transparent;
   border-top: 1px solid var(--line);
-  padding: 56px 0 32px;
+  padding-block: 56px 32px;
   margin-top: 32px;
 }
 .newsletter {
