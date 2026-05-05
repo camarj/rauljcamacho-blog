@@ -1,5 +1,5 @@
 {
-	"compatibility_date": "2026-05-01",
+	"compatibility_date": "2026-05-05",
 	"compatibility_flags": ["global_fetch_strictly_public"],
 	"name": "rauljcamacho-online",
 	"main": "@astrojs/cloudflare/entrypoints/server",
