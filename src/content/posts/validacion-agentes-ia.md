@@ -78,7 +78,3 @@ Esto implica que la spec intermedia; el documento que describe qué debe hacer u
 Y eso, creo, es donde está la oportunidad real.
 
 Si estás trabajando con agentes de IA para desarrollo y has visto estos problemas de cerca, me interesa tu perspectiva. ¿Cómo estás manejando la calidad del código generado? ¿Qué capas de validación estás usando?
-
-En Inteliside, creemos que la tecnología debe ser invisible, pero la confianza debe ser estructural. Si sientes que tu equipo está "corriendo más rápido" pero entregando resultados con más fricción, queremos escucharte.
-
-¿Qué proceso operativo está frenando tu capacidad de escalar hoy? Cuéntanos tu caso en nuestro [formulario de diagnóstico](https://www.inteliside.com/formulario). No buscamos venderte una herramienta, buscamos entender tu industria para diseñar la capa de confianza que tu negocio necesita.
